@@ -1,0 +1,83 @@
+name: "Create Project"
+
+on:
+  workflow_dispatch:
+    inputs:
+      language:
+        description: "The language the project will be in."
+        required: true
+        type: choice
+        options:
+          - "C"
+          - "C++"
+
+      type:
+        description: "The type of project that will be created."
+        required: true
+        type: choice
+        options:
+          - "Executable"
+          - "Static Library"
+          - "Shared Library"
+          - "Interface Library"
+
+      namespace:
+        description: "The namespace that will be applied to CMake targets and is the
+                      name of the directory that all header files will be under. For
+                      example, if namespace is my_namespace, then the path to all 
+                      header files will be \"my_namespace/header.h\" if the language 
+                      is C and \"my_namespace/header.hpp\" if the language is C++.
+                      This parameter is optional and will default to the to name
+                      of the GitHub repository if left empty."
+        required: false
+        type: string
+        default: ""
+permissions:
+  contents: write
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  create_project:
+    if: github.repository != 'Patman1O1/c-cxx-project-template'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Configure Bot With GitHub
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Install Tools
+        run: pip install -e "${GITHUB_WORKSPACE}"
+
+      - name: Create Project
+        run: |
+          create-project                                   \
+            "${{ github.event.repository.name }}"          \
+            "${{ github.event.inputs.language }}"          \
+            "${{ github.event.inputs.type }}"              \
+            "${{ github.actor }}"                          \
+            "${{ github.event.inputs.namespace }}"         \
+            "0.1.0"                                        \
+            "${{ github.event.repository.description }}"
+
+      - name: Commit changes
+        run: |
+          git add -A
+          if git diff --cached --quiet; then
+            echo "::error::create-project produced no changes"
+            exit 1
+          fi
+          git commit -m "Create ${GITHUB_REPOSITORY}"
+          git push

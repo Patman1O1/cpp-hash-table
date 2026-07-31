@@ -1,0 +1,30 @@
+from conan import ConanFile
+from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps, cmake_layout
+from conan.tools.build import can_run
+import os
+
+class TestPackage(ConanFile):
+    settings = ("os", "arch", "compiler", "build_type")
+
+    def requirements(self) -> None: self.requires(self.tested_reference_str)
+
+    def build_requirements(self) -> None:
+        self.tool_requires("cmake/[>={{ cmake_version }}]")
+
+    def layout(self) -> None:
+        cmake_layout(self)
+        self.cpp.build.bindirs = ["bin"]
+
+    def generate(self) -> None:
+        CMakeToolchain(self).generate()
+        CMakeDeps(self).generate()
+
+    def build(self) -> None:
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+
+    def test(self) -> None:
+        if can_run(self):
+            cmd = os.path.join(self.cpp.build.bindir, "test_package")
+            self.run(cmd, env="conanrun")

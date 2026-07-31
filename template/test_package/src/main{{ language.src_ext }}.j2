@@ -1,0 +1,27 @@
+{% if language.name == "C" %}
+// ISO Includes
+#include <stddef.h>
+#include <stdio.h>
+
+// Local Includes
+#include <{{ project.namespace }}/{{ project.name }}.h>
+
+int main(void) {
+    printf("Hello world!\n");
+    return 0;
+}
+{% elif language.name == "C++" %}
+// ISO C Includes
+#include <cstddef>
+
+// ISO C++ Includes
+#include <iostream>
+
+// Local Includes
+#include <{{ project.namespace }}/{{ project.name }}.hpp>
+
+auto main() -> int {
+    std::println(std::cout, "Hello world!");
+    return 0;
+}
+{% endif %}
