@@ -1,15 +1,11 @@
 #-----------------------------------------------------------------------------------------------------------------------
 # Information
 #-----------------------------------------------------------------------------------------------------------------------
-cmake_minimum_required(VERSION {{ cmake_version }})
+cmake_minimum_required(VERSION 4.3.0)
 project("test_package"
         VERSION 0.1.0
         DESCRIPTION ""
-        {% if language.name == "C" %}
-        LANGUAGES C
-        {% elif language.name == "C++" %}
         LANGUAGES CXX
-        {% endif %}
 )
 
 # CMake Information
@@ -23,19 +19,11 @@ cmake_file_api(
 # Settings
 #-----------------------------------------------------------------------------------------------------------------------
 if(PROJECT_IS_TOP_LEVEL)
-    {% if language.name == "C" %}
-    # C Settings
-    set(CMAKE_C_STANDARD {{ language.std }})
-    set(CMAKE_C_STANDARD_REQUIRED ON)
-    set(CMAKE_C_EXTENSIONS OFF)
-    set(CMAKE_C_VISIBILITY_PRESET hidden)
-    {% elif language.name == "C++" %}
     # C++ Settings
-    set(CMAKE_CXX_STANDARD {{ language.std }})
+    set(CMAKE_CXX_STANDARD 26)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
     set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-    {% endif %}
     set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -54,7 +42,7 @@ endif()
 #-----------------------------------------------------------------------------------------------------------------------
 # Dependencies
 #-----------------------------------------------------------------------------------------------------------------------
-find_package({{ project.name }} REQUIRED)
+find_package(cpp_hash_table REQUIRED)
 include(GNUInstallDirs)
 
 #-----------------------------------------------------------------------------------------------------------------------
