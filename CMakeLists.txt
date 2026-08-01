@@ -2,7 +2,7 @@
 # Information
 #-----------------------------------------------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 4.3.0)
-project("cpp_hash_table"
+project("hash_table"
         VERSION 0.1.0
         DESCRIPTION ""
         LANGUAGES CXX
@@ -61,44 +61,44 @@ if(NOT CMAKE_SKIP_INSTALL_RULES)
 endif()
 
 #-----------------------------------------------------------------------------------------------------------------------
-# Target: cpp_hash_table_headers
-# Alias: collections::cpp_hash_table_headers
+# Target: hash_table_headers
+# Alias: collections::hash_table_headers
 # Type: Interface Library
 #-----------------------------------------------------------------------------------------------------------------------
 # Target definition
-add_library(cpp_hash_table_headers INTERFACE)
+add_library(hash_table_headers INTERFACE)
 
 # Target alias
-add_library(collections::cpp_hash_table_headers ALIAS cpp_hash_table_headers)
+add_library(collections::hash_table_headers ALIAS hash_table_headers)
 
 # Target headers
-target_include_directories(cpp_hash_table_headers
+target_include_directories(hash_table_headers
     INTERFACE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
 #-----------------------------------------------------------------------------------------------------------------------
-# Target: cpp_hash_table
-# Alias: collections::cpp_hash_table
+# Target: hash_table
+# Alias: collections::hash_table
 # Type: Interface Library
-# Dependencies: collections::cpp_hash_table_headers
+# Dependencies: collections::hash_table_headers
 #-----------------------------------------------------------------------------------------------------------------------
 # Target definition
-add_library(cpp_hash_table INTERFACE)
+add_library(hash_table INTERFACE)
 
 # Target alias
-add_library(collections::cpp_hash_table ALIAS cpp_hash_table)
+add_library(collections::hash_table ALIAS hash_table)
 
 # Target dependencies
-target_link_libraries(cpp_hash_table
+target_link_libraries(hash_table
     INTERFACE
-        collections::cpp_hash_table_headers
+        collections::hash_table_headers
 )
 
 # Target properties
-set_target_properties(cpp_hash_table PROPERTIES
-        OUTPUT_NAME cpp_hash_table
+set_target_properties(hash_table PROPERTIES
+        OUTPUT_NAME hash_table
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
         CXX_VISIBILITY_PRESET hidden
@@ -107,11 +107,11 @@ set_target_properties(cpp_hash_table PROPERTIES
 
 if(NOT CMAKE_SKIP_INSTALL_RULES)
     # Install cpp_hash_table
-    install(TARGETS cpp_hash_table
-            RUNTIME COMPONENT cpp_hash_table
-            LIBRARY COMPONENT cpp_hash_table
-            NAMELINK_COMPONENT cpp_hash_table
-            ARCHIVE COMPONENT cpp_hash_table
+    install(TARGETS hash_table
+            RUNTIME COMPONENT hash_table
+            LIBRARY COMPONENT hash_table
+            NAMELINK_COMPONENT hash_table
+            ARCHIVE COMPONENT hash_table
             INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 endif()
 
