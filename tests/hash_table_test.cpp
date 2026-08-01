@@ -3,8 +3,8 @@
 #include <gmock/gmock.h>
 
 // Local Includes
-#include <collections/cpp_hash_table.hpp>
+#include <collections/hash_table.hpp>
 
-namespace cpp_hash_table_testing {
-
-} // namespace cpp_hash_table_testing
+namespace hash_table_testing {
+   
+} // namespace hash_table_testing
