@@ -5,7 +5,7 @@
 #include <iostream>
 
 // Local Includes
-#include <collections/cpp_hash_table.hpp>
+#include <collections/hash_table.hpp>
 
 auto main() -> int {
     std::println(std::cout, "Hello world!");
