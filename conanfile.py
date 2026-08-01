@@ -21,7 +21,7 @@ class HashTable(ConanFile):
 
     def configure(self) -> None:
         if self.settings.build_type == "Debug":
-	    self.options.build_tests.value = True
+	        self.options.build_tests.value = True
 
     def build_requirements(self) -> None:
         self.tool_requires("cmake/[>=4.3.0]")
