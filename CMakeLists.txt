@@ -27,6 +27,16 @@ if(PROJECT_IS_TOP_LEVEL)
     set(CMAKE_VISIBILITY_INLINES_HIDDEN ON)
     set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+    # Ensure the current source directory contains the .clang directory
+    file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/.clang)
+
+    # Create a symlink to compile_commands.json file
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
+            ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
+            ${CMAKE_CURRENT_SOURCE_DIR}/.clang/compile_commands.json
+    )
+
     # Project Settings
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
     set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
